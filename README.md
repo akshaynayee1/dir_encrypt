@@ -1,97 +1,136 @@
-# 🔐 Zip File Encryption and Decryption using AES
+# 🔐 VFCL Secure File Encryption Module
 
-This project provides Python scripts to compress a directory into a zip file and encrypt it using AES-256 encryption. The generated AES key must be securely stored for future decryption.
+### Security Layer for the Virtual Fault Current Limiting (VFCL) System
 
-## 📋 Requirements
+The VFCL Secure File Encryption Module is responsible for protecting sensitive device data, configuration files, fault logs, and operational telemetry before transmission to the centralized monitoring platform.
 
-Make sure you have the following Python package installed:
+The module uses **AES-256 encryption** to secure device-generated files and telemetry packages, ensuring confidentiality and integrity during storage and communication. Encrypted data is transmitted through the VFCL communication infrastructure using secure MQTT channels, preventing unauthorized access to critical electrical system information.
 
-```bash
-pip install cryptography
-```
-
-## 📁 Files
-
-- `🔐 encrypt_zip.py`: Script to zip a directory and encrypt it using AES-256 encryption.
-- `🔓 decrypt_zip.py`: Script to decrypt an encrypted zip file using the AES key and IV (Initialization Vector).
-- `📄 README.md`: Documentation on how to use the project.
-
-## 🚀 How to Use
-
-### 1️⃣ Encrypting a Zip File
-
-1. Open the `encrypt_zip.py` script and specify the path of the directory you want to zip:
-
-   ```python
-   directory_to_zip = r"E:\path\to\your\directory"  # Replace with the actual directory path
-   ```
-
-2. Run the script to:
-   - Compress the specified directory into a zip file.
-   - Generate a 256-bit AES key and a random IV (Initialization Vector).
-   - Encrypt the zip file using AES in CBC mode.
-   
-3. Once the encryption is complete, the AES key and IV will be printed in hexadecimal format. **Save these securely!** The encrypted file will be saved as `encrypted_output.bin`.
-
-#### 📋 Example Output:
-
-```
-🔑 AES Key (keep this safe!): d9f8e12c2a3e9d0aebbff6d7c78f6a1f6c4c0e9e7f2e5e8b11b17ff72a8e5237
-🔑 IV: 3dcb5671dba8bcfb07e2f5686cfa88c1
-The zip file has been encrypted and saved as encrypted_output.bin
-```
-
-4. **Important**: Save the AES key and IV as they are necessary to decrypt the file.
-
-#### 🏃‍♂️ Run the Script:
-
-```bash
-python encrypt_zip.py
-```
-
-### 2️⃣ Decrypting the Zip File
-
-1. Open the `decrypt_zip.py` script.
-
-2. Replace the placeholder `your_aes_key_here` with the AES key you obtained during encryption. For example:
-
-   ```python
-   aes_key = bytes.fromhex('d9f8e12c2a3e9d0aebbff6d7c78f6a1f6c4c0e9e7f2e5e8b11b17ff72a8e5237')  # Replace with your actual AES key
-   ```
-
-3. Run the script, and the decrypted zip file will be saved as `decrypted_output.zip`. You can then extract it using any zip extraction tool.
-
-#### 🏃‍♂️ Run the Script:
-
-```bash
-python decrypt_zip.py
-```
-
-## ⚠️ Important Notes
-
-- **🔑 AES Key Security**: The AES key is required for decryption. Store it in a secure place, as it cannot be recovered if lost.
-- **🔒 IV (Initialization Vector)**: The IV is saved in the encrypted file and used for decryption.
-- **🔐 Encryption Algorithm**: The scripts use AES-256 in CBC mode, a symmetric encryption algorithm. The same AES key and IV must be used for decryption.
-
-### 🛠️ Example Workflow
-
-1. **Encrypt a directory**:
-
-   ```bash
-   python encrypt_zip.py
-   ```
-
-2. **Decrypt the encrypted file**:
-
-   ```bash
-   python decrypt_zip.py
-   ```
-
-## ✨ Customization
-
-- **📂 Custom Output Locations**: Modify the output paths in the scripts for the zip, encrypted, and decrypted files.
-- **📁 Directory Paths**: Replace the default paths in the scripts with the locations of your own directories.
+This security layer acts as a device authorization and protection mechanism within the VFCL ecosystem. Devices must be authenticated and authorized before participating in monitoring operations or exchanging data with the central platform.
 
 ---
 
-💻 Created by **Akshaykumar Nayee** 👨‍💻
+## 🚀 Key Features
+
+* 🔐 AES-256 file encryption
+* 📦 Automatic device file packaging and compression
+* 📡 Secure transmission through MQTT infrastructure
+* 🔑 Device-level authorization mechanism
+* 🛡️ Protection of fault logs and telemetry data
+* ☁️ Secure edge-to-cloud communication
+* 📂 Encrypted configuration management
+* 🔄 Secure file decryption for authorized users
+* 🚨 Prevention of unauthorized device operation
+
+---
+
+## 🏗️ Security Architecture
+
+```text
+VFCL Device
+      │
+      ▼
+┌──────────────────────┐
+│ Fault Logs           │
+│ Device Config Files  │
+│ Waveform Data        │
+│ Telemetry Data       │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│ AES-256 Encryption   │
+│ Security Module      │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│ Secure MQTT Channel  │
+│ Encrypted Transport  │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│ VFCL Web Platform    │
+│ Authentication Layer │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│ Authorized Access    │
+│ Decryption Process   │
+└──────────────────────┘
+```
+
+---
+
+## 🔒 Device Security Workflow
+
+1. 📊 Device generates telemetry and operational files.
+2. 📦 Files are compressed into a ZIP package.
+3. 🔐 A unique AES-256 encryption key is generated.
+4. 🛡️ The ZIP package is encrypted before transmission.
+5. 📡 Encrypted data is sent through the MQTT communication layer.
+6. ☁️ The VFCL platform validates the device identity.
+7. 🔑 Only authorized users and systems can decrypt the files.
+8. 🚨 Unauthorized devices cannot participate in VFCL operations.
+
+---
+
+## 🔑 Security Controls
+
+### AES-256 Encryption
+
+The module uses AES-256 encryption to protect:
+
+* Device configuration files
+* Electrical fault logs
+* Waveform datasets
+* Operational telemetry
+* System diagnostic reports
+
+### Device Authorization
+
+Every device must be registered and authorized by the VFCL platform before it can:
+
+* Send telemetry data
+* Publish fault events
+* Upload device files
+* Participate in monitoring operations
+
+Unauthorized devices are automatically restricted from communication with the platform.
+
+---
+
+## 📡 MQTT Security Integration
+
+Encrypted files and telemetry are transmitted through the MQTT communication layer, providing:
+
+* Secure device-to-cloud communication
+* Encrypted payload transmission
+* Controlled device authentication
+* Protection against unauthorized access
+* Reliable fault-event delivery
+
+---
+
+## 🛠️ Technology Stack
+
+* Python
+* AES-256 Encryption
+* Cryptography Library
+* ZIP Compression
+* MQTT
+* Raspberry Pi
+* ESP32
+* Industrial IoT Security
+* Device Authentication
+* Secure Edge Computing
+
+---
+
+## 🎯 Role Within VFCL
+
+This module serves as the security backbone of the Virtual Fault Current Limiting (VFCL) System by ensuring that device data, fault logs, and operational telemetry remain protected throughout their lifecycle.
+
+By combining AES-256 encryption, secure MQTT communication, and device authorization controls, the module helps maintain the confidentiality, integrity, and trustworthiness of critical electrical monitoring data across the VFCL ecosystem.
